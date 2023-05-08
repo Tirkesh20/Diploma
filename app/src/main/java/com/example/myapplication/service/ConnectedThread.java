@@ -49,11 +49,10 @@ public class ConnectedThread extends Thread {
 
         byte[] buffer = new byte[1024];
         int bytes = 0; // bytes returned from read()
-        int numberOfReadings = 0; //to control the number of readings from the device
 
         // Keep listening to the InputStream until an exception occurs.
         //We just want to get 1 data readings from the device
-        while (numberOfReadings < 1) {
+        while (true) {
             try {
 
                 buffer[bytes] = (byte) mmInStream.read();
@@ -65,7 +64,7 @@ public class ConnectedThread extends Thread {
                     //Value to be read by the Observer streamed by the Obervable
                     valueRead=readMessage;
                     bytes = 0;
-                    numberOfReadings++;
+
                 } else {
                     bytes++;
                 }

@@ -126,77 +126,17 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
-        // Create an Observable from RxAndroid
-        //The code will be executed when an Observer subscribes to the the Observable
-        final Observable<String> connectToBTObservable = Observable.create(emitter -> {
-            Log.d(TAG, "Calling connectThread class");
-            //Call the constructor of the ConnectThread class
-            //Passing the Arguments: an Object that represents the BT device,
-            // the UUID and then the handler to update the UI
-            ConnectThread connectThread = new ConnectThread(arduinoBTModule, arduinoUUID, handler);
-            connectThread.start();
-            connectThread.join();
-            //Check if Socket connected
-            if (connectThread.getMmSocket().isConnected()) {
-                Log.d(TAG, "Calling ConnectedThread class");
-                //The pass the Open socket as arguments to call the constructor of ConnectedThread
-                ConnectedThread connectedThread = new ConnectedThread(connectThread.getMmSocket());
-                connectedThread.start();
-                connectedThread.join();
-                if (connectedThread.getValueRead() != null) {
-                    // If we have read a value from the Arduino
-                    // we call the onNext() function
-                    //This value will be observed by the observer
-                    emitter.onNext(connectedThread.getValueRead());
-                }
-                //We just want to stream 1 value, so we close the BT stream
-                connectedThread.cancel();
-            } else {
-                connectThread.getMmSocket().connect();
-                Log.d(TAG, "Calling ConnectedThread class");
-                //The pass the Open socket as arguments to call the constructor of ConnectedThread
-                ConnectedThread connectedThread = new ConnectedThread(connectThread.getMmSocket());
-                connectedThread.start();
-                connectedThread.join();
-                if (connectedThread.getValueRead() != null) {
-                    // If we have read a value from the Arduino
-                    // we call the onNext() function
-                    //This value will be observed by the observer
-                    emitter.onNext(connectedThread.getValueRead());
-                }
-                //We just want to stream 1 value, so we close the BT stream
-                connectedThread.cancel();
-            }
-            //  SystemClock.sleep(5000); // simulate delay
-            //Then we close the socket connection
-
-            //We could Override the onComplete function
-            emitter.onComplete();
-
-        });
 
         connectToDevice.setOnClickListener(view -> {
             Intent intent = new Intent(MainActivity.this, AnemometerActivity.class);
 
             if (arduinoBTModule != null) {
-                Log.d(TAG, "module not null");
-                //We subscribe to the observable until the onComplete() is called
-                //We also define control the thread management with
-                // subscribeOn:  the thread in which you want to execute the action
-                // observeOn: the thread in which you want to get the response
-                connectToBTObservable.
-                        observeOn(AndroidSchedulers.mainThread()).
-                        subscribeOn(Schedulers.io()).
-                        subscribe(valueRead -> {
                             //valueRead returned by the onNext() from the Observable
                             //btReadings.setText(valueRead);
-                            intent.putExtra("valueRead", valueRead);
                             intent.putExtra("arduinoBTModule", arduinoBTModule);
                             intent.putExtra("uuid", arduinoUUID.toString());
                             startActivity(intent);
                             //We just scratched the surface with RxAndroid
-                        });
-
             } else {
                 Log.d(TAG, "module null");
             }
