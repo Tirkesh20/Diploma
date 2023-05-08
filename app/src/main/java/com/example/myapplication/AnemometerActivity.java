@@ -44,6 +44,18 @@ public class AnemometerActivity extends AppCompatActivity {
         setContentView(R.layout.anemometer);
         imageView = findViewById(R.id.imageView);
         String val = null;
+        handler = new Handler(Looper.getMainLooper()) {
+            @Override
+            public void handleMessage(Message msg) {
+                switch (msg.what) {
+                    case ERROR_READ:
+                    case MSG_READ:
+                        String arduinoMsg = msg.obj.toString(); // Read message from Arduino
+                        btReadings.setText(arduinoMsg);
+                        break;
+                }
+            }
+        };
         if (getIntent().getExtras() != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 arduinoBTModule = getIntent().getExtras().getParcelable("arduinoBTModule", BluetoothDevice.class);
@@ -57,21 +69,7 @@ public class AnemometerActivity extends AppCompatActivity {
             }
         }
         new ConnectToBt().execute();
-        handler = new Handler(Looper.getMainLooper()) {
-            @Override
-            public void handleMessage(Message msg) {
-                switch (msg.what) {
-                    case ERROR_READ:
-                        String arduinoMsg = msg.obj.toString(); // Read message from Arduino
-                        btReadings.setText(arduinoMsg);
-                        break;
-                    case MSG_READ:
-                        String ardMSg = msg.obj.toString();
-                        btReadings.setText(ardMSg);
-                        break;
-                }
-            }
-        };
+
 
         btReadings = findViewById(R.id.btReadings);
         if (val != null) {
@@ -103,7 +101,7 @@ public class AnemometerActivity extends AppCompatActivity {
             if (connectThread.getMmSocket().isConnected()) {
                 Log.d(TAG, "Calling ConnectedThread class");
                 //The pass the Open socket as arguments to call the constructor of ConnectedThread
-                ConnectedThread connectedThread = new ConnectedThread(connectThread.getMmSocket());
+                ConnectedThread connectedThread = new ConnectedThread(connectThread.getMmSocket(),handler);
                 connectedThread.start();
             }
             // SystemClock.sleep(5000); // simulate delay

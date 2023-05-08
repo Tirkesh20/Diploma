@@ -1,5 +1,6 @@
 package com.example.myapplication.service;
 
+
 import android.bluetooth.BluetoothSocket;
 import android.os.Handler;
 import android.util.Log;
@@ -16,9 +17,12 @@ public class ConnectedThread extends Thread {
     private final BluetoothSocket mmSocket;
     private final InputStream mmInStream;
     private final OutputStream mmOutStream;
+    public static Handler handler;
+    private final static int ERROR_READ = 0; // used in bluetooth handler to identify message update
+    private final static int MSG_READ = 1;
     private String valueRead;
 
-    public ConnectedThread(BluetoothSocket socket) {
+    public ConnectedThread(BluetoothSocket socket, Handler handler) {
         mmSocket = socket;
         InputStream tmpIn = null;
         OutputStream tmpOut = null;
@@ -39,10 +43,7 @@ public class ConnectedThread extends Thread {
         //We wont use the Output stream of this project
         mmInStream = tmpIn;
         mmOutStream = tmpOut;
-    }
-
-    public String getValueRead(){
-        return valueRead;
+       ConnectedThread.handler =handler;
     }
 
     public void run() {
@@ -60,9 +61,10 @@ public class ConnectedThread extends Thread {
                 // If I detect a "\n" means I already read a full measurement
                 if (buffer[bytes] == '\n') {
                     readMessage = new String(buffer, 0, bytes);
-                    Log.e(TAG, readMessage);
+                    Log.e(TAG, readMessage+"reading");
+                    handler.obtainMessage(MSG_READ, readMessage).sendToTarget();
                     //Value to be read by the Observer streamed by the Obervable
-                    valueRead=readMessage;
+                    valueRead = readMessage;
                     bytes = 0;
 
                 } else {

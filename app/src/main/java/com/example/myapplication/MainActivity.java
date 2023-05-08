@@ -39,13 +39,11 @@ public class MainActivity extends AppCompatActivity {
     // Global variables we will use in the
     private static final String TAG = "Main";
     private static final int REQUEST_ENABLE_BT = 1;
-    //We will use a Handler to get the BT Connection statys
-    public static Handler handler;
-    private final static int ERROR_READ = 0; // used in bluetooth handler to identify message update
+
     BluetoothDevice arduinoBTModule = null;
     UUID arduinoUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"); //We declare a default UUID to create the global variable
 
-    @SuppressLint({"HandlerLeak", "CheckResult"})
+    @SuppressLint({ "CheckResult"})
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,21 +57,6 @@ public class MainActivity extends AppCompatActivity {
         Button connectToDevice = findViewById(R.id.connectToDevice);
         Log.d(TAG, "Begin Execution");
 
-
-        //Using a handler to update the interface in case of an error connecting to the BT device
-        //My idea is to show handler vs RxAndroid
-        handler = new Handler(Looper.getMainLooper()) {
-            @Override
-            public void handleMessage(Message msg) {
-                switch (msg.what) {
-
-                    case ERROR_READ:
-                        String bluetoothMsg = msg.obj.toString(); // Read message from Arduino
-                        Toast.makeText(MainActivity.this, bluetoothMsg, Toast.LENGTH_SHORT).show();
-                        break;
-                }
-            }
-        };
         //Check if the phone supports BT
         if (bluetoothAdapter == null) {
             // Device doesn't support Bluetooth
