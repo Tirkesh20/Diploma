@@ -10,18 +10,17 @@
 
     <TextView
         android:id="@+id/btReadings2"
-        android:layout_width="96dp"
-        android:layout_height="31dp"
+        android:layout_width="106dp"
+        android:layout_height="34dp"
         android:background="@drawable/input_design"
-        android:text="  SW ,231"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.863"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintStart_toEndOf="@+id/btReadingsText2"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.717" />
+        app:layout_constraintVertical_bias="0.715" />
 
     <TextView
         android:id="@+id/btReadingsText2"
@@ -33,16 +32,16 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.142"
+        app:layout_constraintHorizontal_bias="0.157"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.716" />
 
     <Button
         android:id="@+id/receiveData2"
-        android:layout_width="74dp"
-        android:layout_height="41dp"
-        android:layout_marginStart="168dp"
+        android:layout_width="83dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="164dp"
         android:layout_marginTop="596dp"
         android:text="GPS"
         app:layout_constraintStart_toStartOf="parent"
@@ -50,9 +49,9 @@
         tools:ignore="MissingConstraints" />
 
     <Button
-        android:id="@+id/receiveData3"
-        android:layout_width="139dp"
-        android:layout_height="42dp"
+        android:id="@+id/mainMenu"
+        android:layout_width="130dp"
+        android:layout_height="52dp"
         android:layout_marginStart="256dp"
         android:layout_marginTop="596dp"
         android:text="Главное меню"
@@ -62,54 +61,60 @@
 
     <TextView
         android:id="@+id/btReadingsText"
-        android:layout_width="193dp"
-        android:layout_height="30dp"
+        android:layout_width="204dp"
+        android:layout_height="34dp"
         android:layout_marginStart="32dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/input_design"
         android:text=" Скорость  ветра:"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btReadingsText2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.641" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/btReadings"
-        android:layout_width="106dp"
-        android:layout_height="32dp"
+        android:layout_width="105dp"
+        android:layout_height="36dp"
         android:background="@drawable/input_design"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btReadings2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.891"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.428"
+        app:layout_constraintStart_toEndOf="@+id/btReadingsText"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.64" />
+        app:layout_constraintVertical_bias="0.965" />
 
     <Button
         android:id="@+id/receiveData"
-        android:layout_width="142dp"
-        android:layout_height="44dp"
+        android:layout_width="132dp"
+        android:layout_height="55dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="596dp"
+        android:enabled="false"
         android:text="Anemometer Flugger"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="241dp"
-        android:layout_height="262dp"
-        android:layout_marginTop="100dp"
-        app:layout_constraintBottom_toTopOf="@+id/btReadingsText"
+        android:id="@+id/imageView2"
+        android:layout_width="216dp"
+        android:layout_height="285dp"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="91dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginBottom="91dp"
+        app:layout_constraintBottom_toTopOf="@+id/btReadings"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/pointer"
+        app:layout_constraintVertical_bias="0.375"
+        app:srcCompat="@drawable/stk"
         tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

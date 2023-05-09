@@ -30,7 +30,7 @@ public class AnemometerActivity extends AppCompatActivity {
     BluetoothDevice arduinoBTModule;
     ImageView imageView;
     String[] values;
-    TextView btReadings;
+    TextView btReadings, btReadings2;
     public static Handler handler;
     private static final String TAG = "AnemometerActivity";
     UUID arduinoUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"); //We declare a default UUID to create the global variable
@@ -42,7 +42,7 @@ public class AnemometerActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.anemometer);
-        imageView = findViewById(R.id.imageView);
+        imageView = findViewById(R.id.imageView2);
         String val = null;
         handler = new Handler(Looper.getMainLooper()) {
             @Override
@@ -50,8 +50,11 @@ public class AnemometerActivity extends AppCompatActivity {
                 switch (msg.what) {
                     case ERROR_READ:
                     case MSG_READ:
-                        String arduinoMsg = msg.obj.toString(); // Read message from Arduino
-                        btReadings.setText(arduinoMsg);
+                        String arduinoMsg = msg.obj.toString();
+                        values = arduinoMsg.split(",");
+                        imageView.setRotation((float) Math.abs(Integer.parseInt(values[0])));
+                        btReadings.setText("  "+values[1]);// Read message from Arduino
+                        btReadings2.setText("  "+values[0]);
                         break;
                 }
             }
@@ -68,19 +71,13 @@ public class AnemometerActivity extends AppCompatActivity {
                 arduinoUUID = UUID.fromString(getIntent().getStringExtra("uuid"));
             }
         }
+        btReadings2 = findViewById(R.id.btReadings2);
+        btReadings = findViewById(R.id.btReadings);
+
+        Button connectToDevice = findViewById(R.id.receiveData);
         new ConnectToBt().execute();
 
 
-        btReadings = findViewById(R.id.btReadings);
-        if (val != null) {
-            values = val.split(",");
-            imageView.setRotation((float) (Integer.parseInt(values[0]) * 180 / 3.14159));
-            btReadings.setText(values[0] + "--" + values[1]);
-        }
-        Button connectToDevice = findViewById(R.id.receiveData);
-        connectToDevice.setOnClickListener(view -> {
-            btReadings.setText("");
-        });
     }
 
     private class ConnectToBt extends AsyncTask<Void, Void, Void> {
@@ -101,7 +98,7 @@ public class AnemometerActivity extends AppCompatActivity {
             if (connectThread.getMmSocket().isConnected()) {
                 Log.d(TAG, "Calling ConnectedThread class");
                 //The pass the Open socket as arguments to call the constructor of ConnectedThread
-                ConnectedThread connectedThread = new ConnectedThread(connectThread.getMmSocket(),handler);
+                ConnectedThread connectedThread = new ConnectedThread(connectThread.getMmSocket(), handler);
                 connectedThread.start();
             }
             // SystemClock.sleep(5000); // simulate delay
