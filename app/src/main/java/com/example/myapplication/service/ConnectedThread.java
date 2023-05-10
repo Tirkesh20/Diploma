@@ -61,7 +61,6 @@ public class ConnectedThread extends Thread {
                 // If I detect a "\n" means I already read a full measurement
                 if (buffer[bytes] == '\n') {
                     readMessage = new String(buffer, 0, bytes);
-                    Log.e(TAG, readMessage+"reading");
                     handler.obtainMessage(MSG_READ, readMessage).sendToTarget();
                     //Value to be read by the Observer streamed by the Obervable
                     valueRead = readMessage;
@@ -86,9 +85,5 @@ public class ConnectedThread extends Thread {
         } catch (IOException e) {
             Log.e(TAG, "Could not close the connect socket", e);
         }
-    }
-
-    public OutputStream getMmOutStream() {
-        return mmOutStream;
     }
 }
