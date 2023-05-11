@@ -35,12 +35,18 @@ public class GpsActivity extends AppCompatActivity implements GpsService {
 
     public static final int DEF_INT = 1000;
     public static final int PERMISSION_FINE_LOCATION = 99;
+    public static final String NOT_AVAILABLE = "Not available";
+    public static final String NOT_TRACKED = "Location not tracked";
+    public static final String TRACKED = "Location is tracked";
+    public static final String USING_TOWERS = "Using Towers + WIFI";
+
+    public static final String USING_GPS_SENSORS = "Using GPS sensors";
     TextView tv_lat, tv_labellat, tv_labellon, tv_lon, tv_labelaltitude,
             tv_altitude, tv_labelaccuracy, tv_accuracy, tv_labelspeed,
             tv_speed, tv_labelsensor, tv_sensor,
             tv_labelupdates, tv_updates, tv_address, tv_lbladdress, wayPointCounts;
     View divider;
-    Button btnNewPaint, btnShowWayPoints;
+    Button btnNewPaint, btnShowWayPoints, btnShowMap;
     Switch sw_locationsupdates, sw_gps;
     Location currentLocation;
     List<Location> savedLocations;
@@ -72,6 +78,7 @@ public class GpsActivity extends AppCompatActivity implements GpsService {
         btnNewPaint = findViewById(R.id.btn_newWayPoint);
         btnShowWayPoints = findViewById(R.id.btn_showWayPointList);
         wayPointCounts = findViewById(R.id.tv_countOfCrumbs);
+        btnShowMap = findViewById(R.id.btn_showMap);
         //view
         divider = findViewById(R.id.divider);
 
@@ -88,10 +95,10 @@ public class GpsActivity extends AppCompatActivity implements GpsService {
         sw_gps.setOnClickListener(v -> {
             if (sw_gps.isChecked()) {
                 locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-                tv_sensor.setText("Using GPS sensors");
+                tv_sensor.setText(USING_GPS_SENSORS);
             } else {
                 locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-                tv_sensor.setText("Using Towers + WIFI");
+                tv_sensor.setText(USING_TOWERS);
             }
         });
         sw_locationsupdates.setOnClickListener(v -> {
@@ -117,23 +124,27 @@ public class GpsActivity extends AppCompatActivity implements GpsService {
             Intent intent = new Intent(GpsActivity.this, ShowSavedLocationsList.class);
             startActivity(intent);
         });
+        btnShowMap.setOnClickListener(v -> {
+            Intent intent = new Intent(GpsActivity.this, MapsActivity.class);
+            startActivity(intent);
+        });
         updateGPS();
     }
 
     public void stopLocationUpdates() {
-        tv_updates.setText("Location not tracked");
-        tv_lat.setText("Location not tracked");
-        tv_lon.setText("Location not tracked");
-        tv_speed.setText("Location not tracked");
-        tv_address.setText("Location not tracked");
-        tv_accuracy.setText("Location not tracked");
-        tv_sensor.setText("Location not tracked");
-        tv_altitude.setText("Location not tracked");
+        tv_updates.setText(NOT_TRACKED);
+        tv_lat.setText(NOT_TRACKED);
+        tv_lon.setText(NOT_TRACKED);
+        tv_speed.setText(NOT_TRACKED);
+        tv_address.setText(NOT_TRACKED);
+        tv_accuracy.setText(NOT_TRACKED);
+        tv_sensor.setText(NOT_TRACKED);
+        tv_altitude.setText(NOT_TRACKED);
         fusedLocationProviderClient.removeLocationUpdates(locationCallback);
     }
 
     public void startLocationUpdates() {
-        tv_updates.setText("Location is being tracked");
+        tv_updates.setText(TRACKED);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 this.requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_FINE_LOCATION);
@@ -166,14 +177,13 @@ public class GpsActivity extends AppCompatActivity implements GpsService {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case PERMISSION_FINE_LOCATION:
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    updateGPS();
-                } else {
-                    Toast.makeText(this, "Permission required", Toast.LENGTH_SHORT).show();
-                    finish();
-                }
+        if (requestCode == PERMISSION_FINE_LOCATION) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                updateGPS();
+            } else {
+                Toast.makeText(this, "Permission required", Toast.LENGTH_SHORT).show();
+                finish();
+            }
         }
     }
 
@@ -188,13 +198,13 @@ public class GpsActivity extends AppCompatActivity implements GpsService {
         if (location.hasAltitude()) {
             tv_altitude.setText(String.valueOf(location.getAltitude()));
         } else {
-            tv_altitude.setText("Not available");
+            tv_altitude.setText(NOT_AVAILABLE);
         }
         if (location.hasSpeed()) {
             tv_speed.setText(String.valueOf(location.getSpeed()));
 
         } else {
-            tv_speed.setText("Not available");
+            tv_speed.setText(NOT_AVAILABLE);
         }
 
         Geocoder geocoder = new Geocoder(GpsActivity.this);
@@ -202,10 +212,10 @@ public class GpsActivity extends AppCompatActivity implements GpsService {
             List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
             if (!addresses.isEmpty()) {
                 Address address = addresses.get(0);
-                tv_address.setText(address.getAddressLine(0) + "," + address.getCountryName());
+                tv_address.setText(address.getAddressLine(0));
             }
         } catch (IOException e) {
-            tv_address.setText("Couldn't get the location");
+            tv_address.setText(NOT_AVAILABLE);
         }
         //show the number of wayPoints
         MyApplication myApplication = (MyApplication) getApplicationContext();

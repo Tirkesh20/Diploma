@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -21,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.myapplication.service.ConnectThread;
 import com.example.myapplication.service.ConnectedThread;
 
+import java.io.IOException;
 import java.util.UUID;
 
 import io.reactivex.Observable;
@@ -32,6 +34,7 @@ public class AnemometerActivity extends AppCompatActivity {
     ImageView imageView;
     String[] values;
     TextView btReadings, btReadings2;
+    BluetoothSocket bluetoothSocket;
     public static Handler handler;
     Button gpsAct;
     private static final String TAG = "AnemometerActivity";
@@ -103,14 +106,24 @@ public class AnemometerActivity extends AppCompatActivity {
             }
             if (connectThread.getMmSocket().isConnected()) {
                 Log.d(TAG, "Calling ConnectedThread class");
+                bluetoothSocket = connectThread.getMmSocket();
                 //The pass the Open socket as arguments to call the constructor of ConnectedThread
-                ConnectedThread connectedThread = new ConnectedThread(connectThread.getMmSocket(), handler);
+                ConnectedThread connectedThread = new ConnectedThread(bluetoothSocket, handler);
                 connectedThread.start();
             }
             return null;
         }
-
     }
 
+    @Override
+    public void onBackPressed() {
+        try {
+            bluetoothSocket.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        finish();
+        super.onBackPressed();
+    }
 }
     
