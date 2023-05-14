@@ -41,10 +41,10 @@
         android:id="@+id/gpsAct"
         android:layout_width="83dp"
         android:layout_height="55dp"
-        android:layout_marginStart="164dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="596dp"
         android:text="GPS"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/receiveData"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
 
@@ -52,10 +52,10 @@
         android:id="@+id/mainMenu"
         android:layout_width="130dp"
         android:layout_height="52dp"
-        android:layout_marginStart="256dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="596dp"
         android:text="Главное меню"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/gpsAct"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
 

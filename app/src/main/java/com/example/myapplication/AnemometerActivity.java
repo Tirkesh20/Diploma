@@ -19,19 +19,25 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import com.example.myapplication.dto.BaseDto;
 import com.example.myapplication.service.ConnectThread;
 import com.example.myapplication.service.ConnectedThread;
 
+import org.apache.commons.lang3.SerializationUtils;
+
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+
 import java.util.UUID;
 
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
+
+import tech.gusavila92.websocketclient.WebSocketClient;
 
 public class AnemometerActivity extends AppCompatActivity {
     BluetoothDevice arduinoBTModule;
     ImageView imageView;
+    private WebSocketClient webSocketClient;
     String[] values;
     TextView btReadings, btReadings2;
     BluetoothSocket bluetoothSocket;
@@ -48,6 +54,9 @@ public class AnemometerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.anemometer);
         imageView = findViewById(R.id.imageView2);
+        createWebSocketClient();
+
+
         handler = new Handler(Looper.getMainLooper()) {
             @Override
             public void handleMessage(Message msg) {
@@ -86,8 +95,7 @@ public class AnemometerActivity extends AppCompatActivity {
 
         Button connectToDevice = findViewById(R.id.receiveData);
         new ConnectToBt().execute();
-
-
+        createWebSocketClient();
     }
 
     private class ConnectToBt extends AsyncTask<Void, Void, Void> {
@@ -113,6 +121,58 @@ public class AnemometerActivity extends AppCompatActivity {
             }
             return null;
         }
+    }
+
+    private void createWebSocketClient() {
+        URI uri;
+        try {
+            // Connect to local host
+            uri = new URI("wss://filka.by");
+        } catch (URISyntaxException e) {
+            e.getMessage();
+            return;
+        }
+
+        webSocketClient = new WebSocketClient(uri) {
+            @Override
+            public void onOpen() {
+                Log.i("WebSocket", "Session is starting");
+                webSocketClient.send(SerializationUtils.serialize(new BaseDto()));
+            }
+
+            @Override
+            public void onTextReceived(String s) {
+                Log.i("WebSocket", "Message received");
+            }
+
+            @Override
+            public void onBinaryReceived(byte[] data) {
+            }
+
+            @Override
+            public void onPingReceived(byte[] data) {
+            }
+
+            @Override
+            public void onPongReceived(byte[] data) {
+            }
+
+            @Override
+            public void onException(Exception e) {
+                System.out.println(e.getMessage());
+            }
+
+            @Override
+            public void onCloseReceived() {
+                Log.i("WebSocket", "Closed ");
+                System.out.println("onCloseReceived");
+            }
+        };
+        webSocketClient.addHeader("Cookie", "auth=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6Iml2YW4iLCJyb2xlIjoiY29udHJvbGxlciIsInN0YXR1cyI6Im9uIiwiaWF0IjoxNjgzODE2MDc0fQ.Wv3C6ftD_npKIiu1Fp9FYDhQs7RpU0tuyQuk47HI1PU");
+        webSocketClient.setConnectTimeout(10000);
+        webSocketClient.setReadTimeout(60000);
+        webSocketClient.enableAutomaticReconnection(5000);
+        webSocketClient.connect();
     }
 
     @Override
