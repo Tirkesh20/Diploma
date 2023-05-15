@@ -26,23 +26,22 @@
         android:id="@+id/btReadingsText2"
         android:layout_width="208dp"
         android:layout_height="32dp"
+        android:layout_marginStart="32dp"
         android:background="@drawable/input_design"
         android:text=" Направление ветра:"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.157"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.716" />
 
     <Button
         android:id="@+id/gpsAct"
-        android:layout_width="83dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="164dp"
-        android:layout_marginTop="596dp"
+        android:layout_width="129dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="588dp"
         android:text="GPS"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -52,10 +51,10 @@
         android:id="@+id/mainMenu"
         android:layout_width="130dp"
         android:layout_height="52dp"
-        android:layout_marginStart="256dp"
-        android:layout_marginTop="596dp"
+        android:layout_marginTop="588dp"
+        android:layout_marginEnd="36dp"
         android:text="Главное меню"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
 
@@ -87,18 +86,6 @@
         app:layout_constraintStart_toEndOf="@+id/btReadingsText"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.965" />
-
-    <Button
-        android:id="@+id/receiveData"
-        android:layout_width="132dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="596dp"
-        android:enabled="false"
-        android:text="Anemometer Flugger"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints" />
 
     <ImageView
         android:id="@+id/imageView2"

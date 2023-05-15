@@ -9,7 +9,7 @@ import java.util.List;
 
 public class MyApplication extends Application {
     private static MyApplication singleton;
-    private List<Location> locations;
+    private Location location;
 
     public MyApplication getInstance() {
         return singleton;
@@ -18,14 +18,14 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         singleton = this;
-        locations = new ArrayList<>();
+        ;
     }
 
-    public List<Location> getLocations() {
-        return locations;
+    public Location getLocation() {
+        return location;
     }
 
-    public void setLocations(List<Location> locations) {
-        this.locations = locations;
+    public void setLocation(Location location) {
+        this.location = location;
     }
 }

@@ -19,7 +19,7 @@ import com.example.myapplication.databinding.ActivityMapsBinding;
 import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
-    List<Location> locationList;
+    Location location;
     GoogleMap onMap;
 
     @Override
@@ -35,7 +35,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         MyApplication myApplication = (MyApplication) getApplicationContext();
-        locationList = myApplication.getLocations();
+        location = myApplication.getLocation();
     }
 
     /**
@@ -51,15 +51,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         onMap = googleMap;
         // Add a marker in Sydney and move the camera
-        LatLng lastLocation = new LatLng(-34, 151);
-        for (Location location : locationList) {
-            LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-            MarkerOptions markerOptions = new MarkerOptions();
-            markerOptions.position(latLng);
-            markerOptions.title("lat" + location.getLatitude() + "lon " + location.getLongitude());
-            onMap.addMarker(markerOptions);
-            lastLocation = latLng;
-        }
+        LatLng lastLocation = new LatLng(location.getLatitude(), location.getLongitude());
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(lastLocation);
+        markerOptions.title("lat" + location.getLatitude() + "lon " + location.getLongitude());
+        onMap.addMarker(markerOptions);
         onMap.animateCamera(CameraUpdateFactory.newLatLngZoom(lastLocation, 12.0f));
     }
 }

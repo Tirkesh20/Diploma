@@ -25,13 +25,13 @@
         android:id="@+id/about"
         android:layout_width="220dp"
         android:layout_height="55dp"
-        android:alpha="0.7"
-        android:shadowColor="@color/black"
-        android:textColor="@color/white"
         android:layout_centerHorizontal="true"
-        android:background="?android:attr/selectableItemBackgroundBorderless"
         android:layout_marginTop="490dp"
-        android:text="О приложении" />
+        android:alpha="0.7"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:shadowColor="@color/black"
+        android:text="О приложении"
+        android:textColor="@color/white" />
 
 
 </RelativeLayout>

@@ -43,7 +43,7 @@ public class ConnectedThread extends Thread {
         //We wont use the Output stream of this project
         mmInStream = tmpIn;
         mmOutStream = tmpOut;
-       ConnectedThread.handler =handler;
+        ConnectedThread.handler = handler;
     }
 
     public void run() {
@@ -53,7 +53,7 @@ public class ConnectedThread extends Thread {
 
         // Keep listening to the InputStream until an exception occurs.
         //We just want to get 1 data readings from the device
-        while (true) {
+        while (mmSocket.isConnected()) {
             try {
 
                 buffer[bytes] = (byte) mmInStream.read();
@@ -73,6 +73,16 @@ public class ConnectedThread extends Thread {
             } catch (IOException e) {
                 Log.d(TAG, "Input stream was disconnected", e);
                 break;
+            } finally {
+                try {
+                    if (!mmSocket.isConnected() &mmOutStream != null & mmInStream != null) {
+                        mmSocket.close();
+                        mmInStream.close();
+                        mmOutStream.close();
+                    }
+                } catch (IOException e) {
+                    Log.e(TAG, "Could not close the connect socket", e);
+                }
             }
         }
 
@@ -81,6 +91,7 @@ public class ConnectedThread extends Thread {
     // Call this method from the main activity to shut down the connection.
     public void cancel() {
         try {
+            Log.e(TAG, "close the connect socket");
             mmSocket.close();
         } catch (IOException e) {
             Log.e(TAG, "Could not close the connect socket", e);

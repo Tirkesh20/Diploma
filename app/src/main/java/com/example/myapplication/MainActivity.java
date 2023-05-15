@@ -83,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
                     startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
                     Log.d(TAG, "Bluetooth is enabled now");
                 }
-
             } else {
                 Log.d(TAG, "Bluetooth is enabled");
             }
