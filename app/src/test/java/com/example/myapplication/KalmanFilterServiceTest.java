@@ -14,25 +14,24 @@ public class KalmanFilterServiceTest extends TestCase {
         kalman = new KalmanFilterService(SIZE);
     }
 
-    public void testInitial() {
+        public void testKalman_Filter_Initial() {
         assertEquals(0f, kalman.getAverage());
     }
 
-    public void testOne() {
+    public void testKalman_Filter_One() {
         kalman.add(3.5f);
         assertEquals(3.5f / SIZE, kalman.getAverage());
     }
 
-    public void testFillBuffer() {
+    public void testKalman_Filter_FullFilled() {
         fillBufferAndTest();
     }
 
-    public void testForceOverWrite() {
+    public void testKalman_Force_Over_Write() {
         fillBufferAndTest();
-
         double newVal = SIZE + .5f;
         kalman.add(newVal);
-        assertEquals((FULL_SUM + newVal - .5f) / SIZE, kalman.getAverage());
+        assertEquals(((double) FULL_SUM + newVal - .5f) / SIZE, (double) kalman.getAverage());
     }
 
     public void testManyValues() {

@@ -9,8 +9,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-//Class that given an open BT Socket will
-//Open, manage and close the data Stream from the  BT device
 public class ConnectedThread extends Thread {
 
     private static final String TAG = "ConnectedThread";

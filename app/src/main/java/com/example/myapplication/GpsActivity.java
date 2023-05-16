@@ -19,10 +19,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.example.myapplication.service.GpsService;
-import com.example.myapplication.viewModel.GpsViewModel;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -50,11 +48,8 @@ public class GpsActivity extends AppCompatActivity implements GpsService {
             tv_speed, tv_labelsensor, tv_sensor,
             tv_labelupdates, tv_updates, tv_address, tv_lbladdress, wayPointCounts;
     View divider;
-    GpsViewModel gpsViewModel;
-    Button btnShowMap, mainMenu2, receiveData2;
+    Button btnShowMap, receiveData2;
     Switch sw_locationsupdates, sw_gps;
-    Location currentLocation;
-    List<Location> savedLocations;
 
     LocationCallback locationCallback;
     LocationRequest locationRequest;
@@ -82,10 +77,8 @@ public class GpsActivity extends AppCompatActivity implements GpsService {
         tv_lbladdress = findViewById(R.id.tv_lbladdress);
         tv_altitude = findViewById(R.id.tv_altitude);
         btnShowMap = findViewById(R.id.btn_showMap);
-        mainMenu2 = findViewById(R.id.mainMenu2);
         //view
         divider = findViewById(R.id.divider);
-        gpsViewModel = new ViewModelProvider(this).get(GpsViewModel.class);
         Log.d(TAG, "viewModel init");
         //switch
         sw_locationsupdates = findViewById(R.id.sw_locationsupdates);
@@ -93,15 +86,13 @@ public class GpsActivity extends AppCompatActivity implements GpsService {
 
         /////locationRequest
         receiveData2.setOnClickListener(v -> {
-
+            onBackPressed();
         });
         locationRequest = new LocationRequest();
         locationRequest.setInterval(DEF_INT * 30L);
         locationRequest.setFastestInterval(DEF_INT);
         locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-        mainMenu2.setOnClickListener(v -> {
-            onBackPressed();
-        });
+
         sw_gps.setOnClickListener(v -> {
             if (sw_gps.isChecked()) {
                 locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
@@ -162,8 +153,8 @@ public class GpsActivity extends AppCompatActivity implements GpsService {
                 @Override
                 public void onSuccess(Location location) {
                     updateUIValues(location);
-                    MyApplication myApplication = (MyApplication) getApplicationContext();
-                    myApplication.setLocation(location);
+                    MySingleton mySingleton = (MySingleton) getApplicationContext();
+                    mySingleton.setLocation(location);
                 }
             });
 
@@ -219,9 +210,8 @@ public class GpsActivity extends AppCompatActivity implements GpsService {
         } catch (IOException e) {
             tv_address.setText(NOT_AVAILABLE);
         }
-        //show the number of wayPoints
-        MyApplication myApplication = (MyApplication) getApplicationContext();
-        myApplication.setLocation(location);
+        MySingleton mySingleton = (MySingleton) getApplicationContext();
+        mySingleton.setLocation(location);
     }
 
     @Override

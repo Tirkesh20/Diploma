@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.myapplication.MainActivity"
     android:background="@drawable/background">
+
 
     <Button
         android:id="@+id/connectToDevice"
@@ -18,11 +20,10 @@
         android:textColor="@color/white"
         android:shadowColor="@color/black"
         android:background="?android:attr/selectableItemBackgroundBorderless"
-        android:text="Подключиться к
-        устройству" />
+        android:text="@string/connect" />
 
     <Button
-        android:id="@+id/about"
+        android:id="@+id/btn_about"
         android:layout_width="220dp"
         android:layout_height="55dp"
         android:layout_centerHorizontal="true"
@@ -30,7 +31,7 @@
         android:alpha="0.7"
         android:background="?android:attr/selectableItemBackgroundBorderless"
         android:shadowColor="@color/black"
-        android:text="О приложении"
+        android:text="@string/about"
         android:textColor="@color/white" />
 
 

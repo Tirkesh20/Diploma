@@ -9,69 +9,31 @@
 
 
     <TextView
-        android:id="@+id/btReadings2"
-        android:layout_width="106dp"
-        android:layout_height="34dp"
-        android:background="@drawable/input_design"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.4"
-        app:layout_constraintStart_toEndOf="@+id/btReadingsText2"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.715" />
-
-    <TextView
         android:id="@+id/btReadingsText2"
         android:layout_width="208dp"
         android:layout_height="32dp"
         android:layout_marginStart="32dp"
         android:background="@drawable/input_design"
-        android:text=" Направление ветра:"
+        android:text="@string/wind_dir"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.716" />
+        app:layout_constraintVertical_bias="0.725" />
 
     <Button
         android:id="@+id/gpsAct"
-        android:layout_width="129dp"
-        android:layout_height="52dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="588dp"
-        android:text="GPS"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints" />
-
-    <Button
-        android:id="@+id/mainMenu"
-        android:layout_width="130dp"
-        android:layout_height="52dp"
-        android:layout_marginTop="588dp"
-        android:layout_marginEnd="36dp"
-        android:text="Главное меню"
+        android:layout_width="124dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/gps"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/btReadingsText"
-        android:layout_width="204dp"
-        android:layout_height="34dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/input_design"
-        android:text=" Скорость  ветра:"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/btReadingsText2"
+        app:layout_constraintHorizontal_bias="0.25"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/bofort_text"
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/btReadings"
@@ -85,22 +47,88 @@
         app:layout_constraintHorizontal_bias="0.428"
         app:layout_constraintStart_toEndOf="@+id/btReadingsText"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.965" />
+        app:layout_constraintVertical_bias="0.963" />
+
+    <TextView
+        android:id="@+id/btReadings2"
+        android:layout_width="106dp"
+        android:layout_height="34dp"
+        android:background="@drawable/input_design"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintStart_toEndOf="@+id/btReadingsText2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.724" />
+
+    <Button
+        android:id="@+id/mainMenu"
+        android:layout_width="124dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/disconnect"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.822"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/beuafort"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/btReadingsText"
+        android:layout_width="204dp"
+        android:layout_height="34dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/input_design"
+        android:text="@string/wind_speed"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/btReadingsText2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/beuafort"
+        android:layout_width="106dp"
+        android:layout_height="34dp"
+        android:background="@drawable/input_design"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.384"
+        app:layout_constraintStart_toEndOf="@+id/btReadingsText2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.8" />
+
+    <TextView
+        android:id="@+id/bofort_text"
+        android:layout_width="208dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="32dp"
+        android:background="@drawable/input_design"
+        android:text="@string/beaufort_scale"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.798" />
 
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="216dp"
         android:layout_height="285dp"
         android:layout_marginStart="70dp"
-        android:layout_marginTop="91dp"
+        android:layout_marginTop="66dp"
         android:layout_marginEnd="60dp"
-        android:layout_marginBottom="91dp"
-        app:layout_constraintBottom_toTopOf="@+id/btReadings"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.03"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.375"
         app:srcCompat="@drawable/stk"
         tools:ignore="MissingConstraints" />
 

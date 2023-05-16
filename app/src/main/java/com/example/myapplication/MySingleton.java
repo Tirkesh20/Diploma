@@ -3,22 +3,20 @@ package com.example.myapplication;
 import android.app.Application;
 import android.location.Location;
 
-import java.util.ArrayList;
-import java.util.List;
 
 
-public class MyApplication extends Application {
-    private static MyApplication singleton;
+
+public class MySingleton extends Application {
+    private static MySingleton singleton;
     private Location location;
 
-    public MyApplication getInstance() {
+    public MySingleton getInstance() {
         return singleton;
     }
 
     public void onCreate() {
         super.onCreate();
         singleton = this;
-        ;
     }
 
     public Location getLocation() {

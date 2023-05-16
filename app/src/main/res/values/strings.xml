@@ -1,4 +1,18 @@
 <resources>
     <string name="app_name">My Application</string>
     <string name="title_activity_maps">MapsActivity</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="show_map">Show on map</string>
+    <string name="ano_flu">Anemometer and Flugger</string>
+    <string name="connect">Connect to device</string>
+    <string name="about">About</string>
+    <string name="wind_speed"> Wind speed</string>
+    <string name="wind_dir"> Wind direction</string>
+    <string name="gps">  GPS</string>
+    <string name="disconnect"> Disconnect</string>
+    <string name="back"> Back</string>
+    <string name="beaufort_scale"> Beaufort scale</string>
+    <string name="applink">
+<a href="https://github.com/Tirkesh20/Diploma">Get it here</a>
+</string>
 </resources>

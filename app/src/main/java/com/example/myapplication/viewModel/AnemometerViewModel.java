@@ -22,7 +22,7 @@ import java.util.UUID;
 
 
 public class AnemometerViewModel extends ViewModel {
-    private final static int ERROR_READ = 0; // used in bluetooth handler to identify message update
+    private final static int ERROR_READ = 0;
     private final static int MSG_READ = 1;
     private final static String TAG = "AnemometerViewModel";
     private final static int KAlMAN_SIZE = 5;
@@ -30,7 +30,6 @@ public class AnemometerViewModel extends ViewModel {
     private UUID arduinoUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     private BluetoothSocket bluetoothSocket;
     static String[] values;
-    private MutableLiveData<Boolean> isStarted = new MutableLiveData<Boolean>(false);
     private MutableLiveData<Float> angleValue;
     private MutableLiveData<String> speed;
 
@@ -49,7 +48,7 @@ public class AnemometerViewModel extends ViewModel {
                     if (angleValue != null & speed != null) {
                         kalmanFilterService.add(Double.parseDouble(values[0]));
                         angleValue.postValue(kalmanFilterService.getAverage());
-                        speed.postValue("  " + values[1] + " m/s");//
+                        speed.postValue(values[1]);//
                     }
                     break;
             }
@@ -58,9 +57,6 @@ public class AnemometerViewModel extends ViewModel {
 
 
     public void executeViewModel() {
-        if (!isStarted.getValue()) {
-            isStarted.postValue(true);
-        }
         new ConnectToBt().execute();
     }
 
@@ -81,9 +77,6 @@ public class AnemometerViewModel extends ViewModel {
         @Override
         protected Void doInBackground(Void... voids) {
             Log.d(TAG, "Calling connectThread class");
-            //Call the constructor of the ConnectThread class
-            //Passing the Arguments: an Object that represents the BT device,
-            // the UUID and then the handler to update the UI
             ConnectThread connectThread = new ConnectThread(arduinoBTModule, arduinoUUID, handler);
             connectThread.start();
             try {
@@ -94,7 +87,6 @@ public class AnemometerViewModel extends ViewModel {
             if (connectThread.getMmSocket().isConnected()) {
                 Log.d(TAG, "Calling ConnectedThread class");
                 bluetoothSocket = connectThread.getMmSocket();
-                //The pass the Open socket as arguments to call the constructor of ConnectedThread
                 ConnectedThread connectedThread = new ConnectedThread(bluetoothSocket, handler);
                 connectedThread.start();
             }
@@ -125,11 +117,6 @@ public class AnemometerViewModel extends ViewModel {
     public void setBluetoothSocket(BluetoothSocket bluetoothSocket) {
         this.bluetoothSocket = bluetoothSocket;
     }
-
-    public MutableLiveData<Boolean> getIsStarted() {
-        return isStarted;
-    }
-
 
     public void setAngleValue(MutableLiveData<Float> angleValue) {
         this.angleValue = angleValue;

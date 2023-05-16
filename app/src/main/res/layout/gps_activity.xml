@@ -9,23 +9,12 @@
 
     <Button
         android:id="@+id/receiveData2"
-        android:layout_width="132dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="572dp"
-        android:text="Anemometer Flugger"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints" />
-
-    <Button
-        android:id="@+id/mainMenu2"
-        android:layout_width="137dp"
-        android:layout_height="53dp"
-        android:layout_marginTop="572dp"
-        android:layout_marginEnd="44dp"
-        android:text="Главное меню"
+        android:layout_width="406dp"
+        android:layout_height="58dp"
+        android:layout_marginTop="504dp"
+        android:text="@string/ano_flu"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
 
@@ -227,13 +216,13 @@
 
     <Button
         android:id="@+id/btn_showMap"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:text="Показать на карте"
+        android:layout_width="404dp"
+        android:layout_height="62dp"
+        android:layout_marginTop="560dp"
+        android:text="@string/show_map"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.547"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_sensor" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

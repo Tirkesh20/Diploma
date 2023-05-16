@@ -16,8 +16,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.example.myapplication.databinding.ActivityMapsBinding;
 
-import java.util.List;
-
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
     Location location;
     GoogleMap onMap;
@@ -34,8 +32,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        MyApplication myApplication = (MyApplication) getApplicationContext();
-        location = myApplication.getLocation();
+        MySingleton mySingleton = (MySingleton) getApplicationContext();
+        location = mySingleton.getLocation();
     }
 
     /**
